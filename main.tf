@@ -11,6 +11,23 @@ resource "aws_vpc" "terraform_vpc" {
   }
 }
 
+# Correcao primeira issue
+resource "aws_flow_log" "example" {
+  log_destination      = "arn:aws:s3:::clc15-victorqueiroz-terraform"
+  log_destination_type = "s3"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.terraform_vpc.id
+}
+
+# Correcao segunda issue
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.terraform_vpc.id
+  
+  tags = {
+    Name = "my-iac-sg"
+  }
+}
+
 
 ## SUBNETS
 ## Cria 2 subnets 1A
